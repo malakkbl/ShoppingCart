@@ -11,7 +11,7 @@ const itemList = [
     imgSrc: "./img/bag.jpg",
   },
   {
-    title: "Urban Blue Side-Pocket Jeans",
+    title: "Urban Side-Pocket Jeans",
     price: "250",
     imgSrc: "./img/jeans.jpg",
   },
@@ -26,7 +26,7 @@ const itemList = [
     imgSrc: "./img/shirt.jpg",
   },
   {
-    title: "Beige Statement Oversized Vest",
+    title: "Beige Oversized Vest",
     price: "250",
     imgSrc: "./img/vest.jpg",
   },
@@ -43,7 +43,7 @@ rowElement.className = "row justify-content-center";
 itemList.forEach((item) => {
   const cardElement = document.createElement("div");
   cardElement.id = `${item.title.replace(/\s/g, "")}-card`; // replace spaces with nothing
-  cardElement.className = "card col-2 m-3 ";
+  cardElement.className = "card col-2 m-3";
 
   // Create the image object :
   let MyImage = document.createElement("img");
@@ -94,9 +94,11 @@ itemList.forEach((item) => {
   let removeButton = document.createElement("button");
   removeButton.className = "btn btn-danger m-1";
   removeButton.textContent = "Remove";
-  removeButton.addEventListener("click", function () {
-    removeFromCart(item.title.replace(/\s/g, ""));
-  });
+  removeButton.onclick = (function (itemTitle) {
+    return function () {
+      removeFromCart(itemTitle);
+    };
+  })(item.title);
   cardBody.appendChild(removeButton);
   // Create the liking button object :
   let Mylike = document.createElement("button");
@@ -116,16 +118,11 @@ itemList.forEach((item) => {
 
 document.getElementById("cart").appendChild(rowElement);
 
-let deletedItems = []
-
 // Display initial total price :
 let total_price = 0;
+let deletedItems = [];
+
 updateTotalPrice();
-
-function getItemPrice(itemTitle) {
-  return itemList.find((item) => item.title === itemTitle).price;
-}
-
 
 function increaseQuantity(itemTitle) {
   quantities[itemTitle]++;
@@ -145,17 +142,12 @@ function decreaseQuantity(itemTitle) {
   updateTotalPrice();
 }
 
-
 function removeFromCart(itemTitle) {
-  const card = document.getElementById(`${itemTitle}-card`);
+  const card = document.getElementById(`${itemTitle.replace(/\s/g, "")}-card`);
   card.remove();
-  // add the title of the removed item to the deletedItems array
   deletedItems.push(itemTitle);
-  // set the quantity of the removed item to 0
-  quantities[itemTitle] = 0;
   updateTotalPrice();
 }
-
 
 function updateTotalPrice() {
   total_price = 0;
@@ -163,12 +155,15 @@ function updateTotalPrice() {
     // check if the itemTitle is not in the deletedItems array
     if (!deletedItems.includes(itemTitle)) {
       let item = itemList.find((item) => item.title === itemTitle);
-      total_price += Number(item.price) * quantities[itemTitle];
+      if (item) {
+        total_price += Number(item.price) * quantities[itemTitle];
+      }
     }
   }
-  document.getElementById("totalPrice").innerText = `Total price: ${total_price}`;
+  document.getElementById(
+    "totalPrice"
+  ).innerText = `Total price: ${total_price}`;
 }
-
 
 function like(itemTitle) {
   // We first get the like button for the item specified by itemTitle:
@@ -180,4 +175,3 @@ function like(itemTitle) {
   likeButton.classList.toggle("btn-outline-primary");
   //The net effect of these two lines is to switch between the 'btn-primary' and 'btn-outline-primary' styles whenever the like button is clicked.
 }
-

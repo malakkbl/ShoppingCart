@@ -10,38 +10,36 @@ body header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5px;
   font-family: "Handjet", cursive;
 }
 
 body footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 15px;
-    font-family: "Handjet", cursive;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Handjet", cursive;
+}
 
 /* To make the footer stick to the bottom of the page: */
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-    font-family: "Handjet", cursive;
-    overflow-x: hidden;
-  }
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  font-family: "Handjet", cursive;
+  overflow-x: hidden;
+}
 
 body #cart {
   font-family: "Handjet", cursive;
   font-weight: bolder;
-
 }
-body p{
+body p {
   font-family: "Handjet", cursive;
   font-weight: bolder;
   font-size: x-large;
 }
 
-
-
-
+.card:hover{     
+  cursor: pointer; 
+  box-shadow:  0 8px 16px 0 rgba(0,0,0,0.2);
+}
