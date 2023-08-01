@@ -10,7 +10,7 @@ body header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 5px;
   font-family: "Handjet", cursive;
 }
 
@@ -18,7 +18,7 @@ body footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 15px;
     font-family: "Handjet", cursive;
   }
 
@@ -31,10 +31,17 @@ body {
     overflow-x: hidden;
   }
 
-body #cart{
-    font-family: "Handjet", cursive;
-    font-weight: bolder;
+body #cart {
+  font-family: "Handjet", cursive;
+  font-weight: bolder;
+
 }
+body p{
+  font-family: "Handjet", cursive;
+  font-weight: bolder;
+  font-size: x-large;
+}
+
 
 
 

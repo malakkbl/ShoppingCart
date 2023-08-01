@@ -94,9 +94,9 @@ itemList.forEach((item) => {
   let removeButton = document.createElement("button");
   removeButton.className = "btn btn-danger m-1";
   removeButton.textContent = "Remove";
-  removeButton.onclick = function () {
+  removeButton.addEventListener("click", function () {
     removeFromCart(item.title.replace(/\s/g, ""));
-  };
+  });
   cardBody.appendChild(removeButton);
   // Create the liking button object :
   let Mylike = document.createElement("button");
@@ -116,11 +116,23 @@ itemList.forEach((item) => {
 
 document.getElementById("cart").appendChild(rowElement);
 
+let deletedItems = []
+
+// Display initial total price :
+let total_price = 0;
+updateTotalPrice();
+
+function getItemPrice(itemTitle) {
+  return itemList.find((item) => item.title === itemTitle).price;
+}
+
+
 function increaseQuantity(itemTitle) {
   quantities[itemTitle]++;
   document.getElementById(
     `${itemTitle.replace(/\s/g, "")}-quantity`
   ).innerText = `Quantity: ${quantities[itemTitle]}`;
+  updateTotalPrice();
 }
 
 function decreaseQuantity(itemTitle) {
@@ -130,21 +142,42 @@ function decreaseQuantity(itemTitle) {
       `${itemTitle.replace(/\s/g, "")}-quantity`
     ).innerText = `Quantity: ${quantities[itemTitle]}`;
   }
+  updateTotalPrice();
 }
 
+
 function removeFromCart(itemTitle) {
-  delete quantities[itemTitle]; // Delete the item from the quantities object
-  const card = document.getElementById(`${itemTitle}-card`); // Remove the item's card from the DOM
+  const card = document.getElementById(`${itemTitle}-card`);
   card.remove();
+  // add the title of the removed item to the deletedItems array
+  deletedItems.push(itemTitle);
+  // set the quantity of the removed item to 0
+  quantities[itemTitle] = 0;
+  updateTotalPrice();
 }
+
+
+function updateTotalPrice() {
+  total_price = 0;
+  for (let itemTitle in quantities) {
+    // check if the itemTitle is not in the deletedItems array
+    if (!deletedItems.includes(itemTitle)) {
+      let item = itemList.find((item) => item.title === itemTitle);
+      total_price += Number(item.price) * quantities[itemTitle];
+    }
+  }
+  document.getElementById("totalPrice").innerText = `Total price: ${total_price}`;
+}
+
 
 function like(itemTitle) {
   // We first get the like button for the item specified by itemTitle:
   const likeButton = document.getElementById(`${itemTitle}-like`);
-  
-  // The classList property returns the class name(s) of an element as a DOMTokenList object. 
-  //The toggle() method of this object is used to add a class if it does not exist, and remove a class if it does exist. 
-  likeButton.classList.toggle("btn-primary"); 
+
+  // The classList property returns the class name(s) of an element as a DOMTokenList object.
+  //The toggle() method of this object is used to add a class if it does not exist, and remove a class if it does exist.
+  likeButton.classList.toggle("btn-primary");
   likeButton.classList.toggle("btn-outline-primary");
   //The net effect of these two lines is to switch between the 'btn-primary' and 'btn-outline-primary' styles whenever the like button is clicked.
 }
+
