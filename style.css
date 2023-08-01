@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Handjet&family=Roboto:wght@100&display=swap");
+
+body #header_img {
+  width: 75px;
+  height: 75px;
+  margin-right: 20px;
+}
+
+body header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+  font-family: "Handjet", cursive;
+}
+
+body footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    font-family: "Handjet", cursive;
+  }
+
+/* To make the footer stick to the bottom of the page: */
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    font-family: "Handjet", cursive;
+    overflow-x: hidden;
+  }
+
+body #cart{
+    font-family: "Handjet", cursive;
+    font-weight: bolder;
+}
+
+
+
